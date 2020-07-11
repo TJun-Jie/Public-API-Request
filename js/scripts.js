@@ -126,9 +126,12 @@ function creatingCard(user) {
                     modalBirthday.textContent = `${user.dob.date}`
                 }
 
+                button.addEventListener('click', (e) => {
+                    modalContainer.style.display = 'none';
+                })
+
                 addModalInfo(user)
                 createModalHtml()
-                console.log(user)
             
         })
     }
