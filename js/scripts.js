@@ -6,26 +6,26 @@ function creatingCard(user) {
     const gallery = document.querySelector('#gallery')
 
     // card div
-    const card = document.createElement('div');
+    const card = createElement('div');
 
     // Image div
-    const cardImageContainer = document.createElement('div');
-    const img = document.createElement('img');
+    const cardImageContainer = createElement('div');
+    const imgCard = createElement('img');
 
     // card info div
-    const cardInfoContainer = document.createElement('div');
-    const cardName = document.createElement('h3');
-    const cardEmail = document.createElement('p');
-    const cardLocation = document.createElement('p');
+    const cardInfoContainer = createElement('div');
+    const cardName = createElement('h3');
+    const cardEmail = createElement('p');
+    const cardLocation = createElement('p');
 
     // add classes to all the different sections and append them to the html
-    function generatingHtml() {
+    function generatingCardHtml() {
         card.classList.add('card');
         
         cardImageContainer.classList.add('card-img-container');
         
-        img.classList.add('card-img');
-        cardImageContainer.appendChild(img)
+        imgCard.classList.add('card-img');
+        cardImageContainer.appendChild(imgCard);
         
         cardName.classList.add('card-name');
         cardName.classList.add('cap');
@@ -48,17 +48,103 @@ function creatingCard(user) {
 
     // Add the data received to the html
     function createcard(user){
-        img.src = user.picture.large
+        imgCard.src = user.picture.large
         cardName.textContent = `${user.name.first} ${user.name.last}`
         cardEmail.textContent = `${user.email}`
         cardLocation.textContent = user.location.state  
     }
-    generatingHtml()
+    generatingCardHtml()
     createcard(user)
+
+    function addModalWindow() {
+        card.addEventListener('click', e => {
+            
+                // Creating modal elements
+                const modalContainer = createElement('div');
+                const modal = createElement('div');
+                const button =  createElement('button');
+                const modalInfoContainer = createElement('div');
+                const imgModal  = createElement('img');
+                const modalName = createElement('h3');
+                const modalEmail = createElement('p');
+                const modalCity = createElement('p');
+                const modalCode =createElement('p');
+                const modalAddress = createElement('p');
+                const modalBirthday = createElement('p');
+            
+                function createModalHtml() {
+                    addClass(modalContainer, 'modal-container');
+                    addClass(modal, 'modal');
+                    addClass(button, 'modal-close-btn');
+                    button.id = 'modal-close-btn';
+                    addClass(modalInfoContainer, 'modal-info-container');
+                    addClass(imgModal, 'modal-img');
+                    addClass(modalName, 'modal-name');
+                    addClass(modalName, 'cap');
+                    modalName.id = 'name';
+                    addClass(modalEmail, 'modal-text');
+                    addClass(modalCity, 'modal-text');
+                    addClass(modalCode, 'modal-text')
+                    addClass(modalAddress, 'modal-text')
+                    addClass(modalBirthday, 'modal-text')
+                    modalContainer.appendChild(modal);
+                    modal.appendChild(button);
+                    modal.appendChild(modalInfoContainer);
+                    modalInfoContainer.appendChild(imgModal);
+                    modalInfoContainer.appendChild(modalName);
+                    modalInfoContainer.appendChild(modalEmail);
+                    modalInfoContainer.appendChild(modalCity);
+                    modalInfoContainer.appendChild(modalCode);
+                    modalInfoContainer.appendChild(modalAddress);
+                    modalInfoContainer.appendChild(modalBirthday);
+                    button.innerHTML= `<strong>X</strong>`
+                
+                    gallery.insertAdjacentElement('afterend', modalContainer)
+                    
+                    // <div class="modal-container">
+                    // <div class="modal">
+                    //     <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
+                    //     <div class="modal-info-container">
+                    //         <img class="modal-img" src="https://placehold.it/125x125" alt="profile picture">
+                    //         <h3 id="name" class="modal-name cap">name</h3>
+                    //         <p class="modal-text">email</p>
+                    //         <p class="modal-text cap">city</p>
+                    //         <hr>
+                    //         <p class="modal-text">(555) 555-5555</p>
+                    //         <p class="modal-text">123 Portland Ave., Portland, OR 97204</p>
+                    //         <p class="modal-text">Birthday: 10/21/2015</p>
+                    //     </div>
+                    // </div>
+                }
+                function addModalInfo(user) {
+                    imgModal.src = user.picture.large
+                    modalName.textContent = `${user.name.first} ${user.name.last}`
+                    modalEmail.textContent= user.email;
+                    modalCity.textContent = user.location.city;
+                    modalCode.textContent = user.phone;
+                    modalAddress.textContent = `${user.location.street.number} ${user.location.street.name}`
+                    modalBirthday.textContent = `${user.dob.date}`
+                }
+
+                addModalInfo(user)
+                createModalHtml()
+                console.log(user)
+            
+        })
+    }
+
+    
+    addModalWindow()
+
 
 }
 
-
+function createElement(element) {
+    return document.createElement(element);
+}
+function addClass(element, selectedClass) {
+    element.classList.add(selectedClass);
+}
 
 fetch('https://randomuser.me/api/?results=12')
 .then( res => res.json())
@@ -76,4 +162,5 @@ function gettingAllUsers(data) {
 
     }
 }
+
 
