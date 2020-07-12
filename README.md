@@ -14,3 +14,5 @@ added extra padding to header
 added background color for body 
 
 added color for header 
+
+added backgorund color and color for modal

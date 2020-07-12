@@ -105,22 +105,22 @@ function addModalWindow(user) {
     
     return `
     <div class="modal">
-    <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
-    <div class="modal-info-container">
-    <img class="modal-img" src="${user.picture.large}" alt="profile picture">
-    <h3 id="name" class="modal-name cap">${user.name.first} ${user.name.last}</h3>
-    <p class="modal-text">${user.email}</p>
-    <p class="modal-text cap">${user.location.city}</p>
-    <hr>
-    <p class="modal-text">${formatPhone}</p>
+        <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
+        <div class="modal-info-container">
+            <img class="modal-img" src="${user.picture.large}" alt="profile picture">
+            <h3 id="name" class="modal-name cap">${user.name.first} ${user.name.last}</h3>
+            <p class="modal-text">${user.email}</p>
+            <p class="modal-text cap">${user.location.state}</p>
+            <hr>
+            <p class="modal-text">${formatPhone}</p>
             <p class="modal-text">${user.location.street.number} ${user.location.street.name}, ${user.location.city}, ${user.nat} ${user.location.postcode}</p>
             <p class="modal-text">${formatBday[2]}/${formatBday[1]}/${formatBday[0]}</p>
-            </div>
-            </div>
-            <div class="modal-btn-container">
+        </div>
+        </div>
+        <div class="modal-btn-container">
             <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
             <button type="button" id="modal-next" class="modal-next btn">Next</button>
-            </div>
+        </div>
             `;
                       
         
@@ -158,7 +158,7 @@ function searchBar() {
     
 }
 
-
+// search employees functionality
 function searchEmployees() {
     const searchForm = document.querySelector('form');
     const searchInput = document.querySelector('#search-input')
