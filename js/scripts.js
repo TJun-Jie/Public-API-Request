@@ -51,7 +51,7 @@ function creatingCard(user) {
         imgCard.src = user.picture.large
         cardName.textContent = `${user.name.first} ${user.name.last}`
         cardEmail.textContent = `${user.email}`
-        cardLocation.textContent = user.location.state  
+        cardLocation.textContent = `${user.location.state}, ${user.location.country}`  
     }
     generatingCardHtml()
     createcard(user)
@@ -106,7 +106,7 @@ function addModalWindow(user) {
     const modalEmail = createElement('p');
     const modalCity = createElement('p');
     const hr = createElement('hr');
-    const modalCode =createElement('p');
+    const modalPhone =createElement('p');
     const modalAddress = createElement('p');
     const modalBirthday = createElement('p');
     const modalButtonContainer = createElement('div');
@@ -130,7 +130,7 @@ function addModalWindow(user) {
         modalName.id = 'name';
         addClass(modalEmail, 'modal-text');
         addClass(modalCity, 'modal-text');
-        addClass(modalCode, 'modal-text')
+        addClass(modalPhone, 'modal-text')
         addClass(modalAddress, 'modal-text')
         addClass(modalBirthday, 'modal-text')
         modalContainer.appendChild(modal);
@@ -141,7 +141,7 @@ function addModalWindow(user) {
         modalInfoContainer.appendChild(modalEmail);
         modalInfoContainer.appendChild(modalCity);
         modalInfoContainer.appendChild(hr);
-        modalInfoContainer.appendChild(modalCode);
+        modalInfoContainer.appendChild(modalPhone);
         modalInfoContainer.appendChild(modalAddress);
         modalInfoContainer.appendChild(modalBirthday);
         button.innerHTML= `<strong>X</strong>`
@@ -175,9 +175,9 @@ function addModalWindow(user) {
         const phone = user.phone;
         const allNumbers = phone.replace(/[\D]/g , '')
         const formatPhone = `(${allNumbers.slice(0,3)}) ${allNumbers.slice(3,6)}-${allNumbers.slice(6)}`
-        modalCode.textContent = formatPhone
-        
-        modalAddress.textContent = `${user.location.street.number} ${user.location.street.name}, ${user.location.postcode}`
+        modalPhone.textContent = formatPhone
+        console.log(user.location)
+        modalAddress.textContent = `${user.location.street.number} ${user.location.street.name}, ${user.location.city}, ${user.nat} ${user.location.postcode}`
         let bday = user.dob.date.split('T')[0];
         let formatBday = bday.split('-');
         const formattedBday = `${formatBday[2]}/${formatBday[1]}/${formatBday[0]}`
