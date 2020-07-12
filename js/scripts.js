@@ -68,6 +68,7 @@ function creatingCard(user) {
                 const modalName = createElement('h3');
                 const modalEmail = createElement('p');
                 const modalCity = createElement('p');
+                const hr = createElement('hr');
                 const modalCode =createElement('p');
                 const modalAddress = createElement('p');
                 const modalBirthday = createElement('p');
@@ -94,6 +95,7 @@ function creatingCard(user) {
                     modalInfoContainer.appendChild(modalName);
                     modalInfoContainer.appendChild(modalEmail);
                     modalInfoContainer.appendChild(modalCity);
+                    modalInfoContainer.appendChild(hr);
                     modalInfoContainer.appendChild(modalCode);
                     modalInfoContainer.appendChild(modalAddress);
                     modalInfoContainer.appendChild(modalBirthday);
@@ -122,8 +124,12 @@ function creatingCard(user) {
                     modalEmail.textContent= user.email;
                     modalCity.textContent = user.location.city;
                     modalCode.textContent = user.phone;
-                    modalAddress.textContent = `${user.location.street.number} ${user.location.street.name}`
-                    modalBirthday.textContent = `${user.dob.date}`
+                    modalAddress.textContent = `${user.location.street.number} ${user.location.street.name}, ${user.location.postcode}`
+                    let bday = user.dob.date.split('T')[0];
+                    let formatBday = bday.split('-');
+                    const formattedBday = `${formatBday[2]}/${formatBday[1]}/${formatBday[0]}`
+                    modalBirthday.textContent = `Birthday: ${formattedBday}`
+                    console.log(user.dob)
                 }
 
                 button.addEventListener('click', (e) => {

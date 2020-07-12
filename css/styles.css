@@ -261,3 +261,8 @@ header h1 {
         color: rgba(25, 25, 25, 1); 
     }
 }
+
+
+header h1 {
+    font-family: 'Fondamento', cursive;
+}
