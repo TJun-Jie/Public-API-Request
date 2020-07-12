@@ -109,6 +109,14 @@ function addModalWindow(user) {
     const modalCode =createElement('p');
     const modalAddress = createElement('p');
     const modalBirthday = createElement('p');
+    const modalButtonContainer = createElement('div');
+    const modalButtonPrev = createElement('button');
+    const modalButtonNext=  createElement('button');
+
+//     <div class="modal-btn-container">
+//     <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
+//     <button type="button" id="modal-next" class="modal-next btn">Next</button>
+// </div>
 
     function createModalHtml() {
         addClass(modalContainer, 'modal-container');
@@ -137,6 +145,22 @@ function addModalWindow(user) {
         modalInfoContainer.appendChild(modalAddress);
         modalInfoContainer.appendChild(modalBirthday);
         button.innerHTML= `<strong>X</strong>`
+
+        modalButtonContainer.classList.add('modal-btn-container');
+        modalButtonPrev.type = 'button';
+        modalButtonNext.type = 'button';
+        modalButtonPrev.id = 'modal-prev';
+        modalButtonNext.id = 'modal-next';
+        modalButtonPrev.classList.add('modal-prev', 'button');
+        modalButtonNext.classList.add('modal-next', 'button');
+        modalButtonPrev.textContent = 'Prev';
+        modalButtonNext.textContent = 'Next';
+        modalButtonContainer.appendChild(modalButtonPrev)
+        modalButtonContainer.appendChild(modalButtonNext)
+        modalContainer.appendChild(modalButtonContainer);
+        
+        
+
     
         document.querySelector('body').appendChild(modalContainer);
         
@@ -158,6 +182,21 @@ function addModalWindow(user) {
 
     button.addEventListener('click', (e) => {
         modalContainer.style.display = 'none';
+    })
+
+    modalButtonPrev.addEventListener('click', (e) => {
+        prevModal = modalContainer.previousElementSibling
+        modalContainer.style.display = 'none'
+        if(prevModal) {
+            prevModal.style.display = "block";
+        }
+    })
+    modalButtonNext.addEventListener('click', (e) => {
+        nextModal = modalContainer.nextElementSibling
+        modalContainer.style.display = 'none'
+        if(nextModal) {
+            nextModal.style.display = "block";
+        }
     })
 
     addModalInfo(user)
