@@ -56,94 +56,11 @@ function creatingCard(user) {
     generatingCardHtml()
     createcard(user)
 
-    function addModalWindow() {
-        card.addEventListener('click', e => {
-            
-                // Creating modal elements
-                const modalContainer = createElement('div');
-                const modal = createElement('div');
-                const button =  createElement('button');
-                const modalInfoContainer = createElement('div');
-                const imgModal  = createElement('img');
-                const modalName = createElement('h3');
-                const modalEmail = createElement('p');
-                const modalCity = createElement('p');
-                const hr = createElement('hr');
-                const modalCode =createElement('p');
-                const modalAddress = createElement('p');
-                const modalBirthday = createElement('p');
-            
-                function createModalHtml() {
-                    addClass(modalContainer, 'modal-container');
-                    addClass(modal, 'modal');
-                    addClass(button, 'modal-close-btn');
-                    button.id = 'modal-close-btn';
-                    addClass(modalInfoContainer, 'modal-info-container');
-                    addClass(imgModal, 'modal-img');
-                    addClass(modalName, 'modal-name');
-                    addClass(modalName, 'cap');
-                    modalName.id = 'name';
-                    addClass(modalEmail, 'modal-text');
-                    addClass(modalCity, 'modal-text');
-                    addClass(modalCode, 'modal-text')
-                    addClass(modalAddress, 'modal-text')
-                    addClass(modalBirthday, 'modal-text')
-                    modalContainer.appendChild(modal);
-                    modal.appendChild(button);
-                    modal.appendChild(modalInfoContainer);
-                    modalInfoContainer.appendChild(imgModal);
-                    modalInfoContainer.appendChild(modalName);
-                    modalInfoContainer.appendChild(modalEmail);
-                    modalInfoContainer.appendChild(modalCity);
-                    modalInfoContainer.appendChild(hr);
-                    modalInfoContainer.appendChild(modalCode);
-                    modalInfoContainer.appendChild(modalAddress);
-                    modalInfoContainer.appendChild(modalBirthday);
-                    button.innerHTML= `<strong>X</strong>`
-                
-                    gallery.insertAdjacentElement('afterend', modalContainer)
-                    
-                    // <div class="modal-container">
-                    // <div class="modal">
-                    //     <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
-                    //     <div class="modal-info-container">
-                    //         <img class="modal-img" src="https://placehold.it/125x125" alt="profile picture">
-                    //         <h3 id="name" class="modal-name cap">name</h3>
-                    //         <p class="modal-text">email</p>
-                    //         <p class="modal-text cap">city</p>
-                    //         <hr>
-                    //         <p class="modal-text">(555) 555-5555</p>
-                    //         <p class="modal-text">123 Portland Ave., Portland, OR 97204</p>
-                    //         <p class="modal-text">Birthday: 10/21/2015</p>
-                    //     </div>
-                    // </div>
-                }
-                function addModalInfo(user) {
-                    imgModal.src = user.picture.large
-                    modalName.textContent = `${user.name.first} ${user.name.last}`
-                    modalEmail.textContent= user.email;
-                    modalCity.textContent = user.location.city;
-                    modalCode.textContent = user.phone;
-                    modalAddress.textContent = `${user.location.street.number} ${user.location.street.name}, ${user.location.postcode}`
-                    let bday = user.dob.date.split('T')[0];
-                    let formatBday = bday.split('-');
-                    const formattedBday = `${formatBday[2]}/${formatBday[1]}/${formatBday[0]}`
-                    modalBirthday.textContent = `Birthday: ${formattedBday}`
-                    console.log(user.dob)
-                }
 
-                button.addEventListener('click', (e) => {
-                    modalContainer.style.display = 'none';
-                })
 
-                addModalInfo(user)
-                createModalHtml()
-            
-        })
-    }
 
     
-    addModalWindow()
+
 
 
 }
@@ -157,7 +74,9 @@ function addClass(element, selectedClass) {
 
 fetch('https://randomuser.me/api/?results=12')
 .then( res => res.json())
-.then( data => gettingAllUsers(data))
+.then( data => {
+    gettingAllUsers(data)
+})
 .catch(error => console.log('Looks like there was a problem!', error))
 
 
@@ -167,9 +86,91 @@ function gettingAllUsers(data) {
 
     for (let i=0; i< resultsArr.length; i++) {
         creatingCard(resultsArr[i]);
-    
+        addModalWindow(resultsArr[i])
+        addCardEventListener(i)
+        
 
     }
 }
 
+
+
+function addModalWindow(user) {
+    // Creating modal elements
+    const modalContainer = createElement('div');
+    const modal = createElement('div');
+    const button =  createElement('button');
+    const modalInfoContainer = createElement('div');
+    const imgModal  = createElement('img');
+    const modalName = createElement('h3');
+    const modalEmail = createElement('p');
+    const modalCity = createElement('p');
+    const hr = createElement('hr');
+    const modalCode =createElement('p');
+    const modalAddress = createElement('p');
+    const modalBirthday = createElement('p');
+
+    function createModalHtml() {
+        addClass(modalContainer, 'modal-container');
+        addClass(modal, 'modal');
+        addClass(button, 'modal-close-btn');
+        button.id = 'modal-close-btn';
+        addClass(modalInfoContainer, 'modal-info-container');
+        addClass(imgModal, 'modal-img');
+        addClass(modalName, 'modal-name');
+        addClass(modalName, 'cap');
+        modalName.id = 'name';
+        addClass(modalEmail, 'modal-text');
+        addClass(modalCity, 'modal-text');
+        addClass(modalCode, 'modal-text')
+        addClass(modalAddress, 'modal-text')
+        addClass(modalBirthday, 'modal-text')
+        modalContainer.appendChild(modal);
+        modal.appendChild(button);
+        modal.appendChild(modalInfoContainer);
+        modalInfoContainer.appendChild(imgModal);
+        modalInfoContainer.appendChild(modalName);
+        modalInfoContainer.appendChild(modalEmail);
+        modalInfoContainer.appendChild(modalCity);
+        modalInfoContainer.appendChild(hr);
+        modalInfoContainer.appendChild(modalCode);
+        modalInfoContainer.appendChild(modalAddress);
+        modalInfoContainer.appendChild(modalBirthday);
+        button.innerHTML= `<strong>X</strong>`
+    
+        document.querySelector('body').appendChild(modalContainer);
+        
+
+    }
+    function addModalInfo(user) {
+        imgModal.src = user.picture.large
+        modalName.textContent = `${user.name.first} ${user.name.last}`
+        modalEmail.textContent= user.email;
+        modalCity.textContent = user.location.city;
+        modalCode.textContent = user.phone;
+        modalAddress.textContent = `${user.location.street.number} ${user.location.street.name}, ${user.location.postcode}`
+        let bday = user.dob.date.split('T')[0];
+        let formatBday = bday.split('-');
+        const formattedBday = `${formatBday[2]}/${formatBday[1]}/${formatBday[0]}`
+        modalBirthday.textContent = `Birthday: ${formattedBday}`
+        modalContainer.style.display = 'none'
+    }
+
+    button.addEventListener('click', (e) => {
+        modalContainer.style.display = 'none';
+    })
+
+    addModalInfo(user)
+    createModalHtml()
+
+}
+
+
+function addCardEventListener(index) {
+    const card = document.querySelectorAll('.card');
+    const modalContainer = document.querySelectorAll('.modal-container')
+    card[index].addEventListener('click', () => {
+        modalContainer[index].style.display = 'block';
+    })
+}
 
