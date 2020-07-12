@@ -116,10 +116,10 @@ function addModalWindow(user) {
             <p class="modal-text">${user.location.street.number} ${user.location.street.name}, ${user.location.city}, ${user.nat} ${user.location.postcode}</p>
             <p class="modal-text">${formatBday[2]}/${formatBday[1]}/${formatBday[0]}</p>
         </div>
-        </div>
         <div class="modal-btn-container">
             <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
             <button type="button" id="modal-next" class="modal-next btn">Next</button>
+        </div>
         </div>
             `;
                       
