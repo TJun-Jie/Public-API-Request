@@ -171,7 +171,12 @@ function addModalWindow(user) {
         modalName.textContent = `${user.name.first} ${user.name.last}`
         modalEmail.textContent= user.email;
         modalCity.textContent = user.location.city;
-        modalCode.textContent = user.phone;
+        // formatting of phone numbers
+        const phone = user.phone;
+        const allNumbers = phone.replace(/[\D]/g , '')
+        const formatPhone = `(${allNumbers.slice(0,3)}) ${allNumbers.slice(3,6)}-${allNumbers.slice(6)}`
+        modalCode.textContent = formatPhone
+        
         modalAddress.textContent = `${user.location.street.number} ${user.location.street.name}, ${user.location.postcode}`
         let bday = user.dob.date.split('T')[0];
         let formatBday = bday.split('-');
@@ -205,6 +210,7 @@ function addModalWindow(user) {
 }
 
 
+
 function addCardEventListener(index) {
     const card = document.querySelectorAll('.card');
     const modalContainer = document.querySelectorAll('.modal-container')
@@ -212,4 +218,42 @@ function addCardEventListener(index) {
         modalContainer[index].style.display = 'block';
     })
 }
+
+function searchBar() {
+    const searchBarHtml = `<form action="#" method="get">
+    <input type="search" id="search-input" class="search-input" placeholder="Search...">
+    <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+</form>`;
+    const searchDiv = document.querySelector('.search-container');
+    searchDiv.innerHTML = searchBarHtml;
+
+}
+searchBar()
+
+function searchEmployees() {
+    const searchForm = document.querySelector('form');
+    const searchInput = document.querySelector('#search-input')
+    searchForm.addEventListener('submit', () => {
+        const allCards =document.querySelectorAll('.card');
+        // nothing in input so we are going to show all 12 employees
+        if (searchInput.value === '') {
+            for ( let i = 0 ; i < allCards.length; i ++ ) {
+                allCards[i].style.display =  'block'                
+            }
+        }
+        // There is something in the search
+        else {          
+            for ( let i = 0 ; i < allCards.length; i ++ ) {
+                const cardName = allCards[i].querySelector('.card-name').textContent;
+                // accepts cases where user types lower case or with upper casing
+                if(!cardName.toLowerCase().includes(searchInput.value) || !cardName.toLowerCase().includes(searchInput.value)) {
+                    allCards[i].style.display = 'none'
+                }
+            }
+        }
+    })
+    
+}
+searchEmployees()
+
 
