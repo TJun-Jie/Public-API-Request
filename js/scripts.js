@@ -2,9 +2,14 @@
 //public API request 
 //==============================
 
+// async function to fetch data
+async function getUsersData() {
+    let response =  await fetch('https://randomuser.me/api/?results=12');
+    let data = await response.json()
+    return data
+}
 
-fetch('https://randomuser.me/api/?results=12')
-.then( res => res.json())
+getUsersData()
 .then( data => {
     gettingAllUsers(data)
 })
