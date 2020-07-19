@@ -12,6 +12,7 @@ async function getUsersData() {
 getUsersData()
 .then( data => {
     gettingAllUsers(data)
+    console.log(data)
 })
 .catch(error => console.log('Looks like there was a problem!', error))
 
