@@ -26,7 +26,7 @@ function gettingAllUsers(data) {
         // Loop through all users and add all their html together
         cardMarkup +=creatingCard(users[i]);
         // Create modal div for each user
-        modalEvents(users[i]);
+        modalEvents(users, i);
           
     }
     // Add html of all the user's card to the gallery
@@ -61,14 +61,16 @@ function creatingCard(user) {
 }
 
 
-function modalEvents(userData) {
+function modalEvents(allUsersData, index) {
     // create modal div
     const modal  = document.createElement('div')
     modal.classList.add('modal-container')
     // make the modal div invisible initially and only show it when user clicks the card
     modal.style.display = 'none'
+    const prevUser = allUsersData[index-1];
+    const nextUser = allUsersData[index + 1];
     // add user's data into modal 
-    modal.innerHTML = addModalWindow(userData)
+    modal.innerHTML = addModalWindow(allUsersData[index], nextUser, prevUser)
     // Add modal div to the body html
     document.querySelector('body').appendChild(modal)  
 
@@ -80,26 +82,30 @@ function modalEvents(userData) {
 
     // adding prev button event listener
     const modalButtonPrev = modal.querySelector('#modal-prev');
-    modalButtonPrev.addEventListener('click', (e) => {
-        const prevModal = modal.previousElementSibling
-        modal.style.display = 'none'
-        if(prevModal) {
-            prevModal.style.display = "block";
-        }
-    })
+    if (modalButtonPrev) {
+        modalButtonPrev.addEventListener('click', (e) => {
+            const prevModal = modal.previousElementSibling
+            modal.style.display = 'none'
+            if(prevModal) {
+                prevModal.style.display = "block";
+            }
+        })
+    }
     // adding next button event listener
     const modalButtonNext = modal.querySelector('#modal-next');
-    modalButtonNext.addEventListener('click', (e) => {
-        const nextModal = modal.nextElementSibling
-        modal.style.display = 'none'
-        if(nextModal) {
-            nextModal.style.display = "block";
-        }
-    })
+    if (modalButtonNext){
+        modalButtonNext.addEventListener('click', (e) => {
+            const nextModal = modal.nextElementSibling
+            modal.style.display = 'none'
+            if(nextModal) {
+                nextModal.style.display = "block";
+            }
+        })
+    }   
 }
 
 // Receives user's data and create modal's html together with the user's data
-function addModalWindow(user) {
+function addModalWindow(user, nextUser, prevUser) {
     // format phone 
     const phone = user.phone;
     const allNumbers = phone.replace(/[\D]/g , '')
@@ -123,8 +129,8 @@ function addModalWindow(user) {
             <p class="modal-text">${formatBday[2]}/${formatBday[1]}/${formatBday[0]}</p>
         </div>
         <div class="modal-btn-container">
-            <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
-            <button type="button" id="modal-next" class="modal-next btn">Next</button>
+            ${prevUser ? '<button type="button" id="modal-prev" class="modal-prev btn">Prev</button>' : ''}
+            ${nextUser ? '<button type="button" id="modal-next" class="modal-next btn">Next</button>' : ''}
         </div>
         </div>
             `;
@@ -168,12 +174,13 @@ function searchBar() {
 function searchEmployees() {
     const searchForm = document.querySelector('form');
     const searchInput = document.querySelector('#search-input')
-    searchForm.addEventListener('submit', () => {
+    searchForm.addEventListener('submit', (e) => {
+        e.preventDefault();
         const allCards =document.querySelectorAll('.card');
         // nothing in input so we are going to show all 12 employees
         if (searchInput.value === '') {
             for ( let i = 0 ; i < allCards.length; i ++ ) {
-                allCards[i].style.display =  'block'                
+                allCards[i].style.display =  'flex'                
             }
         }
         // There is something in the search
